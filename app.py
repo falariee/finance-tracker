@@ -76,6 +76,11 @@ def create_trip():
         expense_service.set_trip(trip)
         session['current_trip_id'] = trip.id
         
+        # Auto-save to database immediately
+        trip_data = trip.to_dict()
+        expenses_data = []
+        db.save_trip(trip_data, expenses_data)
+        
         # Log trip creation
         trip_logger.log_trip_created(trip.to_dict())
         
