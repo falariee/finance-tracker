@@ -7,6 +7,10 @@ from flask_cors import CORS
 import json
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 from models.trip import Trip
 from models.expense import Expense
 from models.traveler import Traveler
