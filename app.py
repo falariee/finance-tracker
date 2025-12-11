@@ -504,8 +504,8 @@ def get_recent_logs():
         return jsonify({'success': False, 'error': str(e)}), 400
 
 
+# For Vercel serverless deployment
+handler = app
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
-
-# For Vercel deployment
-app = app
