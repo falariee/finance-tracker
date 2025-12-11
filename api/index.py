@@ -1,16 +1,13 @@
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 import sys
 import os
 
-# Add parent directory to path
-parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, parent_dir)
+# Add parent directory to Python path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Set environment variable
+# Set Vercel environment flag
 os.environ['VERCEL'] = '1'
 
-# Import Flask app
+# Now import the app
 from app import app
-
-# Vercel serverless function handler
-def handler(request, response):
-    return app(request, response)
