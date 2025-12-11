@@ -56,5 +56,14 @@
     "data": {
       "format": "Excel"
     }
+  },
+  {
+    "timestamp": "2025-12-11T15:17:08.243143",
+    "action": "traveler_added",
+    "data": {
+      "id": "2fb0c468-ca5e-4352-a514-49c73b2141dd",
+      "name": "val",
+      "email": ""
+    }
   }
 ]

@@ -14,6 +14,7 @@ from services.expense_service import ExpenseService
 from services.report_service import ReportService
 from utils.currency_converter import CurrencyConverter
 from utils.trip_logger import TripLogger
+from utils.database import get_database
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')
@@ -28,6 +29,7 @@ expense_service = ExpenseService()
 report_service = ReportService()
 currency_converter = CurrencyConverter()
 trip_logger = TripLogger()
+db = get_database()
 
 # Data directory - use /tmp for Vercel serverless
 DATA_DIR = '/tmp/data' if os.environ.get('VERCEL') else 'data'
@@ -39,6 +41,17 @@ if not os.path.exists(DATA_DIR):
 def index():
     """Render the main page"""
     return render_template('index.html')
+
+
+@app.route('/api/status', methods=['GET'])
+def get_status():
+    """Get application and database status"""
+    return jsonify({
+        'success': True,
+        'database_enabled': db.enabled,
+        'database_type': 'Supabase' if db.enabled else 'None (fallback mode)',
+        'message': 'Database connected' if db.enabled else 'Running in fallback mode - data will not persist across sessions'
+    })
 
 
 @app.route('/api/trip', methods=['POST'])
@@ -85,8 +98,9 @@ def get_trip():
 def add_traveler():
     """Add a traveler to the trip"""
     try:
+        # For serverless, we need to check if trip exists in memory
         if not expense_service.trip:
-            return jsonify({'success': False, 'error': 'No active trip'}), 400
+            return jsonify({'success': False, 'error': 'No active trip. Please create a trip first.'}), 400
         
         data = request.json
         traveler = Traveler(
@@ -95,6 +109,11 @@ def add_traveler():
         )
         
         expense_service.trip.add_traveler(traveler)
+        
+        # Auto-save to database
+        trip_data = expense_service.trip.to_dict()
+        expenses_data = [exp.to_dict() for exp in expense_service.expenses]
+        db.save_trip(trip_data, expenses_data)
         
         # Log traveler addition
         trip_logger.log_traveler_added(expense_service.trip.id, traveler.to_dict())
@@ -137,6 +156,11 @@ def add_expense():
         
         expense_service.add_expense(expense)
         
+        # Auto-save to database
+        trip_data = expense_service.trip.to_dict()
+        expenses_data = [exp.to_dict() for exp in expense_service.expenses]
+        db.save_trip(trip_data, expenses_data)
+        
         # Log expense addition
         trip_logger.log_expense_added(expense_service.trip.id, expense.to_dict())
         
@@ -168,6 +192,13 @@ def delete_expense(expense_id):
         expense_service.expenses = [
             exp for exp in expense_service.expenses if exp.id != expense_id
         ]
+        
+        # Auto-save to database
+        if expense_service.trip:
+            trip_data = expense_service.trip.to_dict()
+            expenses_data = [exp.to_dict() for exp in expense_service.expenses]
+            db.save_trip(trip_data, expenses_data)
+        
         return jsonify({'success': True})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 400
@@ -292,13 +323,21 @@ def get_split_report():
 
 @app.route('/api/save', methods=['POST'])
 def save_trip():
-    """Save trip to file"""
+    """Save trip to database"""
     try:
         if not expense_service.trip:
             return jsonify({'success': False, 'error': 'No active trip'}), 400
         
-        filename = f"{DATA_DIR}/{expense_service.trip.id}.json"
-        expense_service.export_to_json(filename)
+        # Save to database
+        trip_data = expense_service.trip.to_dict()
+        expenses_data = [exp.to_dict() for exp in expense_service.expenses]
+        
+        success = db.save_trip(trip_data, expenses_data)
+        
+        if not success:
+            # Fallback to file system
+            filename = f"{DATA_DIR}/{expense_service.trip.id}.json"
+            expense_service.export_to_json(filename)
         
         # Log trip save
         trip_logger.log_trip_saved(expense_service.trip.id, expense_service.trip.name)
@@ -306,7 +345,7 @@ def save_trip():
         return jsonify({
             'success': True,
             'message': 'Trip saved successfully',
-            'filename': filename
+            'trip_id': expense_service.trip.id
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 400
@@ -314,13 +353,32 @@ def save_trip():
 
 @app.route('/api/load/<trip_id>', methods=['GET'])
 def load_trip(trip_id):
-    """Load trip from file"""
+    """Load trip from database"""
     try:
-        filename = f"{DATA_DIR}/{trip_id}.json"
-        if not os.path.exists(filename):
-            return jsonify({'success': False, 'error': 'Trip not found'}), 404
+        # Try database first
+        trip_data = db.load_trip(trip_id)
         
-        expense_service.import_from_json(filename)
+        if not trip_data:
+            # Fallback to file system
+            filename = f"{DATA_DIR}/{trip_id}.json"
+            if not os.path.exists(filename):
+                return jsonify({'success': False, 'error': 'Trip not found'}), 404
+            
+            expense_service.import_from_json(filename)
+        else:
+            # Load from database
+            from models.trip import Trip
+            from models.expense import Expense
+            
+            trip = Trip.from_dict(trip_data)
+            expense_service.set_trip(trip)
+            
+            # Load expenses
+            expense_service.expenses = []
+            for exp_data in trip_data.get('expenses', []):
+                expense = Expense.from_dict(exp_data)
+                expense_service.expenses.append(expense)
+        
         session['current_trip_id'] = trip_id
         
         # Log trip load
@@ -339,15 +397,20 @@ def load_trip(trip_id):
 def list_trips():
     """List all saved trips"""
     try:
-        trips = []
-        if os.path.exists(DATA_DIR):
-            for filename in os.listdir(DATA_DIR):
-                if filename.endswith('.json') and filename != 'example.json':
-                    filepath = os.path.join(DATA_DIR, filename)
-                    with open(filepath, 'r') as f:
-                        data = json.load(f)
-                        if data.get('trip'):
-                            trips.append(data['trip'])
+        # Try database first
+        trips = db.list_trips()
+        
+        if not trips:
+            # Fallback to file system
+            trips = []
+            if os.path.exists(DATA_DIR):
+                for filename in os.listdir(DATA_DIR):
+                    if filename.endswith('.json') and filename != 'example.json':
+                        filepath = os.path.join(DATA_DIR, filename)
+                        with open(filepath, 'r') as f:
+                            data = json.load(f)
+                            if data.get('trip'):
+                                trips.append(data['trip'])
         
         return jsonify({
             'success': True,
@@ -383,18 +446,9 @@ def convert_currency():
 @app.route('/join/<trip_id>')
 def join_trip(trip_id):
     """Join a trip via invite link"""
-    try:
-        filename = f"{DATA_DIR}/{trip_id}.json"
-        if not os.path.exists(filename):
-            return render_template('index.html')
-        
-        # Load the trip automatically
-        expense_service.import_from_json(filename)
-        session['current_trip_id'] = trip_id
-        
-        return render_template('index.html')
-    except Exception as e:
-        return render_template('index.html')
+    # Just render the page with trip_id in URL
+    # Frontend will handle loading the trip
+    return render_template('index.html', trip_id=trip_id)
 
 
 @app.route('/api/export/excel/<trip_id>')

@@ -61,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchExchangeRates();
     populateCurrencyDropdowns();
     loadSavedConversion();
+    checkDatabaseStatus();
+    checkForTripInURL();
 });
 
 // Event Listeners
@@ -721,6 +723,51 @@ async function loadTrip(tripId) {
     }
 }
 
+// Check database status
+async function checkDatabaseStatus() {
+    try {
+        const response = await fetch('/api/status');
+        const data = await response.json();
+        
+        if (data.success && !data.database_enabled) {
+            // Show warning about no database
+            showNotification('⚠️ Database not configured - data will not persist. See DATABASE_SETUP.md', 'warning', 8000);
+        }
+    } catch (error) {
+        console.error('Error checking database status:', error);
+    }
+}
+
+// Check for trip ID in URL (for shared links)
+async function checkForTripInURL() {
+    const urlPath = window.location.pathname;
+    
+    // Check if URL is /join/<trip_id>
+    if (urlPath.startsWith('/join/')) {
+        const tripId = urlPath.split('/join/')[1];
+        if (tripId) {
+            // Show loading message
+            showNotification('Loading shared trip...', 'info');
+            
+            // Automatically load the trip
+            await loadTrip(tripId);
+            
+            // Update URL to remove /join/ prefix (optional - for cleaner URL)
+            window.history.replaceState({}, '', '/');
+        }
+    }
+    
+    // Also check URL parameters (?trip=<id>)
+    const urlParams = new URLSearchParams(window.location.search);
+    const tripIdParam = urlParams.get('trip');
+    if (tripIdParam) {
+        showNotification('Loading shared trip...', 'info');
+        await loadTrip(tripIdParam);
+        // Clean up URL
+        window.history.replaceState({}, '', '/');
+    }
+}
+
 // Currency Converter Modal
 function handleConverterModalOpen() {
     converterModal.style.display = 'block';
@@ -948,7 +995,7 @@ function generateCategoryTable(categories) {
 }
 
 // Notification System
-function showNotification(message, type = 'info') {
+function showNotification(message, type = 'info', duration = 3000) {
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
@@ -969,7 +1016,7 @@ function showNotification(message, type = 'info') {
     setTimeout(() => {
         notification.style.animation = 'slideOutRight 0.3s';
         setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    }, duration);
 }
 
 // Add animation styles

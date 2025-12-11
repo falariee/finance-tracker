@@ -1,0 +1,16 @@
+[
+  {
+    "timestamp": "2025-12-11T15:16:52.922764",
+    "action": "created",
+    "data": {
+      "id": "a11f36fa-f6a1-4853-9ddf-8e20fd6c4e66",
+      "name": "babe",
+      "destination": "hk",
+      "start_date": "2025-12-25",
+      "end_date": "2025-12-31",
+      "currency": "USD",
+      "travelers": [],
+      "created_at": "2025-12-11 15:16:52"
+    }
+  }
+]

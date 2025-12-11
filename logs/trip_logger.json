@@ -308,5 +308,30 @@
     "action": "trip_exported",
     "trip_id": "71a3bd7a-1e96-4746-a2e5-2866351ba288",
     "format": "Excel"
+  },
+  {
+    "timestamp": "2025-12-11T15:16:52.921388",
+    "action": "trip_created",
+    "trip_id": "a11f36fa-f6a1-4853-9ddf-8e20fd6c4e66",
+    "trip_name": "babe",
+    "destination": "hk",
+    "currency": "USD",
+    "start_date": "2025-12-25",
+    "end_date": "2025-12-31"
+  },
+  {
+    "timestamp": "2025-12-11T15:17:04.745795",
+    "action": "trip_loaded",
+    "trip_id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+    "trip_name": "babe"
+  },
+  {
+    "timestamp": "2025-12-11T15:17:08.233353",
+    "action": "traveler_added",
+    "trip_id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+    "traveler": {
+      "name": "val",
+      "email": ""
+    }
   }
 ]
