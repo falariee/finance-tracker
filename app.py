@@ -95,11 +95,27 @@ def create_trip():
 @app.route('/api/trip', methods=['GET'])
 def get_trip():
     """Get current trip"""
+    # First check memory
     if expense_service.trip:
         return jsonify({
             'success': True,
             'trip': expense_service.trip.to_dict()
         })
+    
+    # Try to load from database if we have a session trip_id
+    trip_id = session.get('current_trip_id')
+    if trip_id:
+        trip_data = db.load_trip(trip_id)
+        if trip_data:
+            from models.expense import Expense
+            trip = Trip.from_dict(trip_data)
+            expense_service.set_trip(trip)
+            expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
+            return jsonify({
+                'success': True,
+                'trip': trip.to_dict()
+            })
+    
     return jsonify({'success': False, 'error': 'No active trip'}), 404
 
 
@@ -107,9 +123,19 @@ def get_trip():
 def add_traveler():
     """Add a traveler to the trip"""
     try:
-        # For serverless, we need to check if trip exists in memory
+        # For serverless, load trip from database if not in memory
         if not expense_service.trip:
-            return jsonify({'success': False, 'error': 'No active trip. Please create a trip first.'}), 400
+            trip_id = session.get('current_trip_id')
+            if trip_id:
+                trip_data = db.load_trip(trip_id)
+                if trip_data:
+                    from models.expense import Expense
+                    trip = Trip.from_dict(trip_data)
+                    expense_service.set_trip(trip)
+                    expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
+            
+            if not expense_service.trip:
+                return jsonify({'success': False, 'error': 'No active trip. Please create a trip first.'}), 400
         
         data = request.json
         traveler = Traveler(
@@ -138,6 +164,17 @@ def add_traveler():
 @app.route('/api/travelers', methods=['GET'])
 def get_travelers():
     """Get all travelers"""
+    # Load trip from database if not in memory
+    if not expense_service.trip:
+        trip_id = session.get('current_trip_id')
+        if trip_id:
+            trip_data = db.load_trip(trip_id)
+            if trip_data:
+                from models.expense import Expense
+                trip = Trip.from_dict(trip_data)
+                expense_service.set_trip(trip)
+                expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
+    
     if not expense_service.trip:
         return jsonify({'success': False, 'error': 'No active trip'}), 400
     
@@ -151,6 +188,17 @@ def get_travelers():
 def add_expense():
     """Add a new expense"""
     try:
+        # Load trip from database if not in memory
+        if not expense_service.trip:
+            trip_id = session.get('current_trip_id')
+            if trip_id:
+                trip_data = db.load_trip(trip_id)
+                if trip_data:
+                    from models.expense import Expense
+                    trip = Trip.from_dict(trip_data)
+                    expense_service.set_trip(trip)
+                    expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
+        
         if not expense_service.trip:
             return jsonify({'success': False, 'error': 'No active trip'}), 400
         
@@ -184,6 +232,17 @@ def add_expense():
 @app.route('/api/expenses', methods=['GET'])
 def get_expenses():
     """Get all expenses"""
+    # Load trip from database if not in memory
+    if not expense_service.trip:
+        trip_id = session.get('current_trip_id')
+        if trip_id:
+            trip_data = db.load_trip(trip_id)
+            if trip_data:
+                from models.expense import Expense
+                trip = Trip.from_dict(trip_data)
+                expense_service.set_trip(trip)
+                expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
+    
     expenses = expense_service.get_all_expenses()
     return jsonify({
         'success': True,
@@ -216,6 +275,17 @@ def delete_expense(expense_id):
 @app.route('/api/reports/summary', methods=['GET'])
 def get_summary():
     """Get trip summary"""
+    # Load trip from database if not in memory
+    if not expense_service.trip:
+        trip_id = session.get('current_trip_id')
+        if trip_id:
+            trip_data = db.load_trip(trip_id)
+            if trip_data:
+                from models.expense import Expense
+                trip = Trip.from_dict(trip_data)
+                expense_service.set_trip(trip)
+                expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
+    
     if not expense_service.trip:
         return jsonify({'success': False, 'error': 'No active trip'}), 400
     
