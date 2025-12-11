@@ -333,5 +333,97 @@
       "name": "val",
       "email": ""
     }
+  },
+  {
+    "timestamp": "2025-12-11T17:10:03.495540",
+    "action": "trip_created",
+    "trip_id": "b93e249f-1dc9-490b-b5ce-0a4bf9927ae8",
+    "trip_name": "babe",
+    "destination": "hk",
+    "currency": "JPY",
+    "start_date": "2025-12-17",
+    "end_date": "2025-12-25"
+  },
+  {
+    "timestamp": "2025-12-11T17:10:20.510459",
+    "action": "traveler_added",
+    "trip_id": "b93e249f-1dc9-490b-b5ce-0a4bf9927ae8",
+    "traveler": {
+      "name": "ger",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T17:10:25.980400",
+    "action": "expense_added",
+    "trip_id": "b93e249f-1dc9-490b-b5ce-0a4bf9927ae8",
+    "expense": {
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "ger"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T17:10:35.629530",
+    "action": "trip_saved",
+    "trip_id": "b93e249f-1dc9-490b-b5ce-0a4bf9927ae8",
+    "trip_name": "babe"
+  },
+  {
+    "timestamp": "2025-12-11T17:10:36.409395",
+    "action": "trip_exported",
+    "trip_id": "b93e249f-1dc9-490b-b5ce-0a4bf9927ae8",
+    "format": "Excel"
+  },
+  {
+    "timestamp": "2025-12-11T17:13:05.663532",
+    "action": "trip_created",
+    "trip_id": "8b9a1b66-192e-4c8f-bdfa-d6c43207e2ef",
+    "trip_name": "babe",
+    "destination": "japan",
+    "currency": "JPY",
+    "start_date": "2025-12-10",
+    "end_date": "2026-01-01"
+  },
+  {
+    "timestamp": "2025-12-11T17:13:27.552485",
+    "action": "traveler_added",
+    "trip_id": "8b9a1b66-192e-4c8f-bdfa-d6c43207e2ef",
+    "traveler": {
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T17:13:30.449413",
+    "action": "expense_added",
+    "trip_id": "8b9a1b66-192e-4c8f-bdfa-d6c43207e2ef",
+    "expense": {
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T17:13:33.652845",
+    "action": "trip_saved",
+    "trip_id": "8b9a1b66-192e-4c8f-bdfa-d6c43207e2ef",
+    "trip_name": "babe"
+  },
+  {
+    "timestamp": "2025-12-11T17:13:34.367077",
+    "action": "trip_exported",
+    "trip_id": "8b9a1b66-192e-4c8f-bdfa-d6c43207e2ef",
+    "format": "Excel"
+  },
+  {
+    "timestamp": "2025-12-11T17:13:40.922370",
+    "action": "trip_saved",
+    "trip_id": "8b9a1b66-192e-4c8f-bdfa-d6c43207e2ef",
+    "trip_name": "babe"
   }
 ]

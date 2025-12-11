@@ -459,14 +459,32 @@ def export_excel(trip_id):
         # Create reports directory if it doesn't exist
         os.makedirs('reports', exist_ok=True)
         
-        # Load trip data
-        json_filename = f"{DATA_DIR}/{trip_id}.json"
-        if not os.path.exists(json_filename):
-            return jsonify({'success': False, 'error': 'Trip not found'}), 404
-        
         # Create a temporary expense service to export
         temp_service = ExpenseService()
-        temp_service.import_from_json(json_filename)
+        
+        # Try to load from database first
+        trip_data = db.load_trip(trip_id)
+        
+        if trip_data:
+            # Load from database
+            from models.trip import Trip
+            from models.expense import Expense
+            
+            trip = Trip.from_dict(trip_data)
+            temp_service.set_trip(trip)
+            
+            # Load expenses
+            temp_service.expenses = []
+            for exp_data in trip_data.get('expenses', []):
+                expense = Expense.from_dict(exp_data)
+                temp_service.expenses.append(expense)
+        else:
+            # Fallback to file system
+            json_filename = f"{DATA_DIR}/{trip_id}.json"
+            if not os.path.exists(json_filename):
+                return jsonify({'success': False, 'error': 'Trip not found. Please save the trip first.'}), 404
+            
+            temp_service.import_from_json(json_filename)
         
         excel_filename = f"reports/{trip_id}_expenses.xlsx"
         temp_service.export_to_excel(excel_filename)
@@ -488,16 +506,37 @@ def export_excel(trip_id):
 def export_summary(trip_id):
     """Get summary data for export"""
     try:
-        filename = f"{DATA_DIR}/{trip_id}.json"
-        if not os.path.exists(filename):
-            return jsonify({'success': False, 'error': 'Trip not found'}), 404
+        # Try to load from database first
+        trip_data = db.load_trip(trip_id)
         
-        expense_service.import_from_json(filename)
+        # Create a temporary expense service
+        temp_service = ExpenseService()
+        
+        if trip_data:
+            # Load from database
+            from models.trip import Trip
+            from models.expense import Expense
+            
+            trip = Trip.from_dict(trip_data)
+            temp_service.set_trip(trip)
+            
+            # Load expenses
+            temp_service.expenses = []
+            for exp_data in trip_data.get('expenses', []):
+                expense = Expense.from_dict(exp_data)
+                temp_service.expenses.append(expense)
+        else:
+            # Fallback to file system
+            filename = f"{DATA_DIR}/{trip_id}.json"
+            if not os.path.exists(filename):
+                return jsonify({'success': False, 'error': 'Trip not found. Please save the trip first.'}), 404
+            
+            temp_service.import_from_json(filename)
         
         # Get summary data
-        total = expense_service.get_total_expenses()
-        num_expenses = len(expense_service.get_all_expenses())
-        category_totals = expense_service.get_category_totals()
+        total = temp_service.get_total_expenses()
+        num_expenses = len(temp_service.get_all_expenses())
+        category_totals = temp_service.get_category_totals()
         
         categories = []
         for category, amount in category_totals.items():
@@ -515,7 +554,7 @@ def export_summary(trip_id):
                 'num_expenses': num_expenses,
                 'average_expense': total / num_expenses if num_expenses > 0 else 0
             },
-            'expenses': [exp.to_dict() for exp in expense_service.expenses],
+            'expenses': [exp.to_dict() for exp in temp_service.expenses],
             'categories': sorted(categories, key=lambda x: x['amount'], reverse=True)
         })
     except Exception as e:
