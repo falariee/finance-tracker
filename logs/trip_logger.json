@@ -1,0 +1,312 @@
+[
+  {
+    "timestamp": "2025-12-11T14:33:21.479052",
+    "action": "trip_created",
+    "trip_id": "e9a0e4d0-9807-4ae0-be8c-089d6bddb356",
+    "trip_name": "babe",
+    "destination": "japan",
+    "currency": "JPY",
+    "start_date": "2025-12-04",
+    "end_date": "2025-12-16"
+  },
+  {
+    "timestamp": "2025-12-11T14:33:50.310913",
+    "action": "traveler_added",
+    "trip_id": "e9a0e4d0-9807-4ae0-be8c-089d6bddb356",
+    "traveler": {
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:33:53.430881",
+    "action": "expense_added",
+    "trip_id": "e9a0e4d0-9807-4ae0-be8c-089d6bddb356",
+    "expense": {
+      "description": "food",
+      "amount": 1.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:34:06.607727",
+    "action": "trip_saved",
+    "trip_id": "e9a0e4d0-9807-4ae0-be8c-089d6bddb356",
+    "trip_name": "babe"
+  },
+  {
+    "timestamp": "2025-12-11T14:34:07.130384",
+    "action": "trip_exported",
+    "trip_id": "e9a0e4d0-9807-4ae0-be8c-089d6bddb356",
+    "format": "CSV"
+  },
+  {
+    "timestamp": "2025-12-11T14:37:40.192976",
+    "action": "trip_loaded",
+    "trip_id": "a56a4331-1ed3-49c2-ad63-77bc53ecefbf",
+    "trip_name": "babe"
+  },
+  {
+    "timestamp": "2025-12-11T14:38:44.553069",
+    "action": "trip_created",
+    "trip_id": "62e0e126-424d-4fe2-b941-7ccce5296bd7",
+    "trip_name": "babe",
+    "destination": "japan",
+    "currency": "JPY",
+    "start_date": "2025-12-10",
+    "end_date": "2025-12-15"
+  },
+  {
+    "timestamp": "2025-12-11T14:40:29.945738",
+    "action": "trip_created",
+    "trip_id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+    "trip_name": "babe",
+    "destination": "japan",
+    "currency": "JPY",
+    "start_date": "2025-12-16",
+    "end_date": "2025-12-23"
+  },
+  {
+    "timestamp": "2025-12-11T14:41:12.802136",
+    "action": "traveler_added",
+    "trip_id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+    "traveler": {
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:41:18.682303",
+    "action": "expense_added",
+    "trip_id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+    "expense": {
+      "description": "food",
+      "amount": 1.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:41:38.082040",
+    "action": "expense_added",
+    "trip_id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+    "expense": {
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:41:52.242479",
+    "action": "trip_saved",
+    "trip_id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+    "trip_name": "babe"
+  },
+  {
+    "timestamp": "2025-12-11T14:41:52.950539",
+    "action": "trip_exported",
+    "trip_id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+    "format": "Excel"
+  },
+  {
+    "timestamp": "2025-12-11T14:46:11.564370",
+    "action": "trip_created",
+    "trip_id": "92313b9d-5aa8-4024-932c-748d7e19a443",
+    "trip_name": "babe",
+    "destination": "japan",
+    "currency": "JPY",
+    "start_date": "2025-12-16",
+    "end_date": "2025-12-31"
+  },
+  {
+    "timestamp": "2025-12-11T14:46:26.076223",
+    "action": "traveler_added",
+    "trip_id": "92313b9d-5aa8-4024-932c-748d7e19a443",
+    "traveler": {
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:46:28.164298",
+    "action": "expense_added",
+    "trip_id": "92313b9d-5aa8-4024-932c-748d7e19a443",
+    "expense": {
+      "description": "food",
+      "amount": 12.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:49:52.390938",
+    "action": "trip_created",
+    "trip_id": "a697d154-c94c-4d82-9e15-7dc43a0f0ae9",
+    "trip_name": "babe",
+    "destination": "japan",
+    "currency": "JPY",
+    "start_date": "2025-12-16",
+    "end_date": "2025-12-24"
+  },
+  {
+    "timestamp": "2025-12-11T14:50:15.277798",
+    "action": "traveler_added",
+    "trip_id": "a697d154-c94c-4d82-9e15-7dc43a0f0ae9",
+    "traveler": {
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:50:17.933925",
+    "action": "expense_added",
+    "trip_id": "a697d154-c94c-4d82-9e15-7dc43a0f0ae9",
+    "expense": {
+      "description": "food",
+      "amount": 12.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:50:39.950081",
+    "action": "traveler_added",
+    "trip_id": "a697d154-c94c-4d82-9e15-7dc43a0f0ae9",
+    "traveler": {
+      "name": "ger",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:50:56.502217",
+    "action": "expense_added",
+    "trip_id": "a697d154-c94c-4d82-9e15-7dc43a0f0ae9",
+    "expense": {
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "USD",
+      "category": "shopping",
+      "paid_by": "ger"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:51:55.639128",
+    "action": "expense_added",
+    "trip_id": "a697d154-c94c-4d82-9e15-7dc43a0f0ae9",
+    "expense": {
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "USD",
+      "category": "food",
+      "paid_by": "ger"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:52:12.206830",
+    "action": "expense_added",
+    "trip_id": "a697d154-c94c-4d82-9e15-7dc43a0f0ae9",
+    "expense": {
+      "description": "lunch",
+      "amount": 1.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:52:36.679032",
+    "action": "trip_created",
+    "trip_id": "73ff77c5-3fe1-4a8b-ad2b-e0c9aeddab2b",
+    "trip_name": "babe",
+    "destination": "japan",
+    "currency": "JPY",
+    "start_date": "2025-12-16",
+    "end_date": "2025-12-09"
+  },
+  {
+    "timestamp": "2025-12-11T14:52:45.375408",
+    "action": "trip_saved",
+    "trip_id": "73ff77c5-3fe1-4a8b-ad2b-e0c9aeddab2b",
+    "trip_name": "babe"
+  },
+  {
+    "timestamp": "2025-12-11T14:53:08.095015",
+    "action": "trip_created",
+    "trip_id": "be76c7c7-5a15-405c-9f3b-3dc4ddf4ecb3",
+    "trip_name": "babe",
+    "destination": "hk",
+    "currency": "HKD",
+    "start_date": "2025-12-17",
+    "end_date": "2025-12-27"
+  },
+  {
+    "timestamp": "2025-12-11T14:53:53.775770",
+    "action": "trip_created",
+    "trip_id": "207b0ac7-220f-4e3e-890e-048a91208e42",
+    "trip_name": "babe",
+    "destination": "hk",
+    "currency": "HKD",
+    "start_date": "2025-12-25",
+    "end_date": "2025-12-23"
+  },
+  {
+    "timestamp": "2025-12-11T14:55:21.864266",
+    "action": "trip_created",
+    "trip_id": "cbb1ab0c-2416-43ee-bdd3-d8951efaa44a",
+    "trip_name": "babe",
+    "destination": "hk",
+    "currency": "JPY",
+    "start_date": "2025-12-18",
+    "end_date": "2025-12-25"
+  },
+  {
+    "timestamp": "2025-12-11T14:56:11.176929",
+    "action": "trip_created",
+    "trip_id": "71a3bd7a-1e96-4746-a2e5-2866351ba288",
+    "trip_name": "babe",
+    "destination": "hk",
+    "currency": "HKD",
+    "start_date": "2025-12-25",
+    "end_date": "2025-12-31"
+  },
+  {
+    "timestamp": "2025-12-11T14:56:32.584266",
+    "action": "traveler_added",
+    "trip_id": "71a3bd7a-1e96-4746-a2e5-2866351ba288",
+    "traveler": {
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:56:35.008699",
+    "action": "expense_added",
+    "trip_id": "71a3bd7a-1e96-4746-a2e5-2866351ba288",
+    "expense": {
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "HKD",
+      "category": "food",
+      "paid_by": "val"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:56:52.689210",
+    "action": "trip_saved",
+    "trip_id": "71a3bd7a-1e96-4746-a2e5-2866351ba288",
+    "trip_name": "babe"
+  },
+  {
+    "timestamp": "2025-12-11T14:56:53.408431",
+    "action": "trip_exported",
+    "trip_id": "71a3bd7a-1e96-4746-a2e5-2866351ba288",
+    "format": "Excel"
+  }
+]

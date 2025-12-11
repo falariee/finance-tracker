@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Finance Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-plane-departure"></i> Trip Finance Tracker</h1>
+                <div class="header-actions">
+                    <button id="saveBtn" class="btn btn-secondary" style="display: none;">
+                        <i class="fas fa-save"></i> Save Trip
+                    </button>
+                    <button id="loadBtn" class="btn btn-secondary">
+                        <i class="fas fa-folder-open"></i> Load Trip
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Trip Setup Section -->
+            <section id="tripSetup" class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-map-marked-alt"></i> Create Your Trip</h2>
+                </div>
+                <div class="card-body">
+                    <form id="tripForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="tripName">Trip Name</label>
+                                <input type="text" id="tripName" required placeholder="e.g., Summer Vacation 2025">
+                            </div>
+                            <div class="form-group">
+                                <label for="destination">Destination</label>
+                                <input type="text" id="destination" required placeholder="e.g., Paris, France">
+                            </div>
+                            <div class="form-group">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" id="startDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="endDate">End Date</label>
+                                <input type="date" id="endDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="currency">Default Currency</label>
+                                <select id="currency" required>
+                                    <option value="USD">USD - US Dollar 🇺🇸</option>
+                                    <option value="EUR">EUR - Euro 🇪🇺</option>
+                                    <option value="GBP">GBP - British Pound 🇬🇧</option>
+                                    <option value="JPY">JPY - Japanese Yen 🇯🇵</option>
+                                    <option value="AUD">AUD - Australian Dollar 🇦🇺</option>
+                                    <option value="CAD">CAD - Canadian Dollar 🇨🇦</option>
+                                    <option value="CHF">CHF - Swiss Franc 🇨🇭</option>
+                                    <option value="CNY">CNY - Chinese Yuan 🇨🇳</option>
+                                    <option value="INR">INR - Indian Rupee 🇮🇳</option>
+                                    <option value="KRW">KRW - South Korean Won 🇰🇷</option>
+                                    <option value="SGD">SGD - Singapore Dollar 🇸🇬</option>
+                                    <option value="HKD">HKD - Hong Kong Dollar 🇭🇰</option>
+                                    <option value="MXN">MXN - Mexican Peso 🇲🇽</option>
+                                    <option value="BRL">BRL - Brazilian Real 🇧🇷</option>
+                                    <option value="ZAR">ZAR - South African Rand 🇿🇦</option>
+                                    <option value="THB">THB - Thai Baht 🇹🇭</option>
+                                    <option value="MYR">MYR - Malaysian Ringgit 🇲🇾</option>
+                                    <option value="IDR">IDR - Indonesian Rupiah 🇮🇩</option>
+                                    <option value="PHP">PHP - Philippine Peso 🇵🇭</option>
+                                    <option value="VND">VND - Vietnamese Dong 🇻🇳</option>
+                                    <option value="NZD">NZD - New Zealand Dollar 🇳🇿</option>
+                                    <option value="SEK">SEK - Swedish Krona 🇸🇪</option>
+                                    <option value="NOK">NOK - Norwegian Krone 🇳🇴</option>
+                                    <option value="DKK">DKK - Danish Krone 🇩🇰</option>
+                                    <option value="PLN">PLN - Polish Zloty 🇵🇱</option>
+                                    <option value="CZK">CZK - Czech Koruna 🇨🇿</option>
+                                    <option value="HUF">HUF - Hungarian Forint 🇭🇺</option>
+                                    <option value="TRY">TRY - Turkish Lira 🇹🇷</option>
+                                    <option value="AED">AED - UAE Dirham 🇦🇪</option>
+                                    <option value="SAR">SAR - Saudi Riyal 🇸🇦</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check"></i> Create Trip
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Trip Dashboard (hidden initially) -->
+            <div id="tripDashboard" style="display: none;">
+                <!-- Trip Info -->
+                <section class="card trip-info">
+                    <div class="trip-header">
+                        <div>
+                            <h2 id="tripNameDisplay"></h2>
+                            <p><i class="fas fa-map-marker-alt"></i> <span id="tripDestinationDisplay"></span></p>
+                            <p><i class="fas fa-calendar"></i> <span id="tripDatesDisplay"></span></p>
+                        </div>
+                        <div class="trip-stats">
+                            <div class="stat-card stat-card-large">
+                                <div class="stat-value" id="totalExpenses">0</div>
+                                <div class="stat-label">Total Expenses</div>
+                                <div id="currencyBreakdown" class="currency-breakdown"></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="expenseCount">0</div>
+                                <div class="stat-label">Expenses</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="travelerCount">0</div>
+                                <div class="stat-label">Travelers</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button id="currencyConverterBtn" class="btn btn-secondary">
+                                <i class="fas fa-exchange-alt"></i> Currency Converter
+                            </button>
+                            <button id="inviteLinkBtn" class="btn btn-secondary">
+                                <i class="fas fa-user-plus"></i> Invite Others
+                            </button>
+                            <button id="exportSummaryBtn" class="btn btn-secondary">
+                                <i class="fas fa-file-export"></i> Export Summary
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="expenses"><i class="fas fa-receipt"></i> Expenses</button>
+                    <button class="tab-btn" data-tab="travelers"><i class="fas fa-users"></i> Travelers</button>
+                    <button class="tab-btn" data-tab="reports"><i class="fas fa-chart-pie"></i> Reports</button>
+                    <button class="tab-btn" data-tab="split"><i class="fas fa-calculator"></i> Split Bill</button>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="tab-content">
+                    <!-- Expenses Tab -->
+                    <div id="expenses" class="tab-pane active">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-plus-circle"></i> Add Expense</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="expenseForm">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="expenseDesc">Description</label>
+                                            <input type="text" id="expenseDesc" required placeholder="e.g., Dinner at restaurant">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="expenseAmount">Amount</label>
+                                            <input type="number" id="expenseAmount" step="0.01" required placeholder="0.00">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="expenseCurrency">Currency</label>
+                                            <select id="expenseCurrency">
+                                                <!-- Will be populated dynamically -->
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="expenseCategory">Category</label>
+                                            <select id="expenseCategory" required onchange="toggleOtherInput(this)">
+                                                <option value="food">🍽️ Food</option>
+                                                <option value="groceries">🛒 Groceries</option>
+                                                <option value="snacks">🍿 Snacks</option>
+                                                <option value="transport">🚗 Transport</option>
+                                                <option value="accommodation">🏨 Accommodation</option>
+                                                <option value="activities">🎭 Activities</option>
+                                                <option value="shopping">🛍️ Shopping</option>
+                                                <option value="other">📦 Other (Specify)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" id="otherCategoryGroup" style="display: none;">
+                                            <label for="otherCategory">Specify Category</label>
+                                            <input type="text" id="otherCategory" placeholder="e.g., Medical, Entertainment">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="paidBy">Paid By</label>
+                                            <select id="paidBy" required>
+                                                <option value="">Select traveler...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i> Add Expense
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-list"></i> All Expenses</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="expensesList" class="expenses-list">
+                                    <p class="empty-state">No expenses yet. Add your first expense above!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Travelers Tab -->
+                    <div id="travelers" class="tab-pane">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-user-plus"></i> Add Traveler</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="travelerForm">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="travelerName">Name</label>
+                                            <input type="text" id="travelerName" required placeholder="e.g., John Doe">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="travelerEmail">Email (Optional)</label>
+                                            <input type="email" id="travelerEmail" placeholder="john@example.com">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-user-plus"></i> Add Traveler
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-users"></i> Travelers List</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="travelersList" class="travelers-list">
+                                    <p class="empty-state">No travelers yet. Add travelers above!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reports Tab -->
+                    <div id="reports" class="tab-pane">
+                        <div class="report-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-chart-bar"></i> By Category</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="categoryReport"></div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-user-friends"></i> By Person</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="peopleReport"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Split Bill Tab -->
+                    <div id="split" class="tab-pane">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-calculator"></i> Expense Split Calculator</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="splitReport"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Load Trip Modal -->
+        <div id="loadModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-folder-open"></i> Load Trip</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="tripsList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Currency Converter Modal -->
+        <div id="converterModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-exchange-alt"></i> Currency Converter</h3>
+                    <span class="close-converter">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="converter-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="convertAmount">Amount</label>
+                                <input type="number" id="convertAmount" step="0.01" placeholder="100.00" value="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="fromCurrency">From</label>
+                                <select id="fromCurrency">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="toCurrency">To</label>
+                                <select id="toCurrency">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="convertCurrency()">
+                            <i class="fas fa-calculator"></i> Convert
+                        </button>
+                        <div id="conversionResult" style="margin-top: 1.5rem; padding: 1rem; background: var(--background); border-radius: 8px; display: none;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-align: center;">
+                                <span id="convertedValue"></span>
+                            </div>
+                            <div style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.875rem;">
+                                Exchange rate: <span id="exchangeRate"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invite Link Modal -->
+        <div id="inviteModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-user-plus"></i> Invite Others to Trip</h3>
+                    <span class="close-invite">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p style="margin-bottom: 1rem; color: var(--text-secondary);">Share this link with others to invite them to join your trip:</p>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="text" id="inviteLink" readonly style="flex: 1; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-family: monospace;">
+                        <button class="btn btn-primary" onclick="copyInviteLink()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <div style="background: var(--background); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary);">
+                            <i class="fas fa-info-circle"></i> Anyone with this link will be able to view and add expenses to this trip.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Summary Modal -->
+        <div id="exportModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-file-export"></i> Export Summary</h3>
+                    <span class="close-export">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p style="margin-bottom: 1rem; color: var(--text-secondary);">Choose export format:</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <button class="btn btn-primary" onclick="exportExcel()">
+                            <i class="fas fa-file-excel"></i> Export as Excel (with Totals & Currency Breakdown)
+                        </button>
+                        <button class="btn btn-primary" onclick="exportPDF()">
+                            <i class="fas fa-file-pdf"></i> Export as PDF Summary
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

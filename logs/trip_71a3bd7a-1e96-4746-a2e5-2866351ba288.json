@@ -1,0 +1,46 @@
+[
+  {
+    "timestamp": "2025-12-11T14:56:11.178461",
+    "action": "created",
+    "data": {
+      "id": "71a3bd7a-1e96-4746-a2e5-2866351ba288",
+      "name": "babe",
+      "destination": "hk",
+      "start_date": "2025-12-25",
+      "end_date": "2025-12-31",
+      "currency": "HKD",
+      "travelers": [],
+      "created_at": "2025-12-11 14:56:11"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:56:32.594588",
+    "action": "traveler_added",
+    "data": {
+      "id": "fee87ca1-1b2c-4860-81c0-c372ed6909b6",
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:56:35.016972",
+    "action": "expense_added",
+    "data": {
+      "id": "c819d1e4-67bf-4e31-abef-ba9f90145596",
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "HKD",
+      "category": "food",
+      "paid_by": "val",
+      "date": "2025-12-11 14:56:35",
+      "split_with": []
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:56:53.414054",
+    "action": "exported",
+    "data": {
+      "format": "Excel"
+    }
+  }
+]

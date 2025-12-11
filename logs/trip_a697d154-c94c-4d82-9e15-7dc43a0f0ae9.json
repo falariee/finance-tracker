@@ -1,0 +1,90 @@
+[
+  {
+    "timestamp": "2025-12-11T14:49:52.392007",
+    "action": "created",
+    "data": {
+      "id": "a697d154-c94c-4d82-9e15-7dc43a0f0ae9",
+      "name": "babe",
+      "destination": "japan",
+      "start_date": "2025-12-16",
+      "end_date": "2025-12-24",
+      "currency": "JPY",
+      "travelers": [],
+      "created_at": "2025-12-11 14:49:52"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:50:15.286735",
+    "action": "traveler_added",
+    "data": {
+      "id": "83f3c53a-9ba8-4c1a-b9cc-4ffd87066eb4",
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:50:17.942405",
+    "action": "expense_added",
+    "data": {
+      "id": "c8453d25-9ec0-4f2f-9765-892815132a7d",
+      "description": "food",
+      "amount": 12.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val",
+      "date": "2025-12-11 14:50:17",
+      "split_with": []
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:50:39.958194",
+    "action": "traveler_added",
+    "data": {
+      "id": "69e1c031-6853-4071-a854-972301ef2452",
+      "name": "ger",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:50:56.511537",
+    "action": "expense_added",
+    "data": {
+      "id": "40f82596-66e9-4074-bd9e-b2001c54e610",
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "USD",
+      "category": "shopping",
+      "paid_by": "ger",
+      "date": "2025-12-11 14:50:56",
+      "split_with": []
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:51:55.649156",
+    "action": "expense_added",
+    "data": {
+      "id": "14f5776b-59b7-48f3-aee3-5d2de2765d20",
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "USD",
+      "category": "food",
+      "paid_by": "ger",
+      "date": "2025-12-11 14:51:55",
+      "split_with": []
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:52:12.216930",
+    "action": "expense_added",
+    "data": {
+      "id": "41efd219-942f-498b-87e5-6792c469477e",
+      "description": "lunch",
+      "amount": 1.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val",
+      "date": "2025-12-11 14:52:12",
+      "split_with": []
+    }
+  }
+]

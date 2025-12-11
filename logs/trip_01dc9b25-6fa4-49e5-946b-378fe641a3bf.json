@@ -1,0 +1,60 @@
+[
+  {
+    "timestamp": "2025-12-11T14:40:29.946748",
+    "action": "created",
+    "data": {
+      "id": "01dc9b25-6fa4-49e5-946b-378fe641a3bf",
+      "name": "babe",
+      "destination": "japan",
+      "start_date": "2025-12-16",
+      "end_date": "2025-12-23",
+      "currency": "JPY",
+      "travelers": [],
+      "created_at": "2025-12-11 14:40:29"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:41:12.812812",
+    "action": "traveler_added",
+    "data": {
+      "id": "95a7a392-3af7-46af-89d3-e9f0d014f108",
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:41:18.690672",
+    "action": "expense_added",
+    "data": {
+      "id": "f3c52f6d-b1c7-478e-a2b0-8b77104d3191",
+      "description": "food",
+      "amount": 1.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val",
+      "date": "2025-12-11 14:41:18",
+      "split_with": []
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:41:38.090693",
+    "action": "expense_added",
+    "data": {
+      "id": "9bd603b3-f7bf-4aea-9630-321732ea4efe",
+      "description": "lunch",
+      "amount": 12.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val",
+      "date": "2025-12-11 14:41:38",
+      "split_with": []
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:41:52.956906",
+    "action": "exported",
+    "data": {
+      "format": "Excel"
+    }
+  }
+]

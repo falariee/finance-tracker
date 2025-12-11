@@ -1,0 +1,46 @@
+[
+  {
+    "timestamp": "2025-12-11T14:33:21.479769",
+    "action": "created",
+    "data": {
+      "id": "e9a0e4d0-9807-4ae0-be8c-089d6bddb356",
+      "name": "babe",
+      "destination": "japan",
+      "start_date": "2025-12-04",
+      "end_date": "2025-12-16",
+      "currency": "JPY",
+      "travelers": [],
+      "created_at": "2025-12-11 14:33:21"
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:33:50.319645",
+    "action": "traveler_added",
+    "data": {
+      "id": "483f1188-1b17-4e54-ae69-bfc278c28f7f",
+      "name": "val",
+      "email": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:33:53.439398",
+    "action": "expense_added",
+    "data": {
+      "id": "004e4787-b00c-4515-b15d-626164e93d62",
+      "description": "food",
+      "amount": 1.0,
+      "currency": "JPY",
+      "category": "food",
+      "paid_by": "val",
+      "date": "2025-12-11 14:33:53",
+      "split_with": []
+    }
+  },
+  {
+    "timestamp": "2025-12-11T14:34:07.137137",
+    "action": "exported",
+    "data": {
+      "format": "CSV"
+    }
+  }
+]
