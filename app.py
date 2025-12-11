@@ -16,8 +16,12 @@ from utils.currency_converter import CurrencyConverter
 from utils.trip_logger import TripLogger
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-change-this-in-production'
+app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')
 CORS(app)
+
+# Disable Flask session for serverless
+if os.environ.get('VERCEL'):
+    app.config['SESSION_TYPE'] = 'filesystem'
 
 # Global instances
 expense_service = ExpenseService()

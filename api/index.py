@@ -1,16 +1,16 @@
-"""
-Vercel Serverless Function Entry Point
-"""
 import sys
 import os
 
 # Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, parent_dir)
 
-# Set environment variable to indicate Vercel deployment
+# Set environment variable
 os.environ['VERCEL'] = '1'
 
-from app import app as application
+# Import Flask app
+from app import app
 
-# Export for Vercel
-app = application
+# Vercel serverless function handler
+def handler(request, response):
+    return app(request, response)
