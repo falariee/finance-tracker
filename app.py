@@ -25,8 +25,8 @@ report_service = ReportService()
 currency_converter = CurrencyConverter()
 trip_logger = TripLogger()
 
-# Data directory
-DATA_DIR = 'data'
+# Data directory - use /tmp for Vercel serverless
+DATA_DIR = '/tmp/data' if os.environ.get('VERCEL') else 'data'
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 

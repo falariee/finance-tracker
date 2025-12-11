@@ -9,11 +9,16 @@ from datetime import datetime
 
 class TripLogger:
     def __init__(self, log_dir='logs'):
-        self.log_dir = log_dir
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
+        # Use /tmp for Vercel serverless environment
+        if os.environ.get('VERCEL'):
+            self.log_dir = '/tmp/logs'
+        else:
+            self.log_dir = log_dir
         
-        self.log_file = os.path.join(log_dir, 'trip_logger.json')
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
+        
+        self.log_file = os.path.join(self.log_dir, 'trip_logger.json')
         self.activity_log = self._load_logs()
     
     def _load_logs(self):
