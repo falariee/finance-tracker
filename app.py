@@ -107,7 +107,6 @@ def get_trip():
     if trip_id:
         trip_data = db.load_trip(trip_id)
         if trip_data:
-            from models.expense import Expense
             trip = Trip.from_dict(trip_data)
             expense_service.set_trip(trip)
             expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
@@ -129,7 +128,6 @@ def add_traveler():
             if trip_id:
                 trip_data = db.load_trip(trip_id)
                 if trip_data:
-                    from models.expense import Expense
                     trip = Trip.from_dict(trip_data)
                     expense_service.set_trip(trip)
                     expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
@@ -170,7 +168,7 @@ def get_travelers():
         if trip_id:
             trip_data = db.load_trip(trip_id)
             if trip_data:
-                from models.expense import Expense
+
                 trip = Trip.from_dict(trip_data)
                 expense_service.set_trip(trip)
                 expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
@@ -194,7 +192,6 @@ def add_expense():
             if trip_id:
                 trip_data = db.load_trip(trip_id)
                 if trip_data:
-                    from models.expense import Expense
                     trip = Trip.from_dict(trip_data)
                     expense_service.set_trip(trip)
                     expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
@@ -238,7 +235,7 @@ def get_expenses():
         if trip_id:
             trip_data = db.load_trip(trip_id)
             if trip_data:
-                from models.expense import Expense
+
                 trip = Trip.from_dict(trip_data)
                 expense_service.set_trip(trip)
                 expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
@@ -281,7 +278,7 @@ def get_summary():
         if trip_id:
             trip_data = db.load_trip(trip_id)
             if trip_data:
-                from models.expense import Expense
+
                 trip = Trip.from_dict(trip_data)
                 expense_service.set_trip(trip)
                 expense_service.expenses = [Expense.from_dict(exp) for exp in trip_data.get('expenses', [])]
@@ -447,7 +444,7 @@ def load_trip(trip_id):
         else:
             # Load from database
             from models.trip import Trip
-            from models.expense import Expense
+
             
             trip = Trip.from_dict(trip_data)
             expense_service.set_trip(trip)
@@ -547,7 +544,7 @@ def export_excel(trip_id):
         if trip_data:
             # Load from database
             from models.trip import Trip
-            from models.expense import Expense
+
             
             trip = Trip.from_dict(trip_data)
             temp_service.set_trip(trip)
@@ -594,7 +591,7 @@ def export_summary(trip_id):
         if trip_data:
             # Load from database
             from models.trip import Trip
-            from models.expense import Expense
+
             
             trip = Trip.from_dict(trip_data)
             temp_service.set_trip(trip)
